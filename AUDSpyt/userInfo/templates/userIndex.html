@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Informacion usuarios</title>
+</head>
+<body>
+{% if all_users %}
+<ul>
+    {% for user in all_users %}
+    <li>
+        <a href="/userInfo/{{ user.id}}/">{{ user.nombre }}</a>
+    </li>
+    {% endfor %}
+{% else %}
+    <h3> No hay usuarios </h3>
+{% endif %}
+
+</ul>
+</body>
+</html>
