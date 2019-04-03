@@ -27,9 +27,11 @@ class Activity(models.Model):
     titulo = models.CharField(max_length=250)
     descripcionCorta =  models.CharField(max_length=250)
     descripcionLarga =  models.CharField(max_length=250)
-    icono =  models.ImageField(upload_to = 'IconoActividad/', default = 'pic_folder/None/no-img.jpg')
+    icono =  models.ImageField(upload_to = 'IconoActividad/')#, default = 'pic_folder/None/no-img.jpg')
     fechaFinal = models.CharField(max_length=250)
     #def RESUMEN USER ACTIVITY
+    #def ActivitytoInstagramPost
+        #def onCascadeDMUserActivity
 
 
 
