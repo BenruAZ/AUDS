@@ -1,28 +1,49 @@
-import json
 from django.shortcuts import render
-from InstagramAPI import InstagramAPI
 from django.http import HttpResponse
+from django.template import loader
+from .models import instagramActivity, instagramDirect,instagramUser,comentarios
+from actividades.models import Activity
+from userInfo.models import UserInfo
+import json
+from InstagramAPI import InstagramAPI
 
-
-
-
-def ff(self):
-    instagramAPI.getSelfGeoMedia(self)
-
-
-def loginresult(request, foo):
-    if (foo):
-        instagramAPI.getSelfUserFeed()  # get self user feed
-        return HttpResponse('<h2> Detail user Id :' + instagramAPI.LastJson + ' </h2>')
-    else:
-        return HttpResponse('<h2> Detail user Id :' + "Can't login!" + ' </h2>')
-
-instagramAPI = InstagramAPI("taeusdsspyt", "test.pyt")
-foo = instagramAPI.login()
-
-loginresult(instagramAPI, foo)
-# login
-#mediaId = '1469246128528859784_1520706701'    # a media_id
-#recipients = []                             # array of user_ids. They can be strings or ints
-#InstagramAPI.direct_share(mediaId, recipients, text='aquest es es darrer')
 # Create your views here.
+
+def index(request):
+    all_users = UserInfo.objects.all()
+    context = {
+        'all_users': all_users,
+    }
+    return render(request, 'userIndex.html', context)
+
+def intagrampruebas1(request):
+    from .models import instagramActivity
+    from actividades.models import Activity
+
+    retunrstring = ''
+    ee = instagramActivity.objects.all()[1]
+    if ee != None:
+        pp = ee.serchComentarios()
+
+        return HttpResponse(retunrstring + ' ----------------- ' + str(pp))
+
+def intagrampruebas(request):
+    retunrstring = ''
+    api = InstagramAPI("taeusdsspyt", "test.pyt")
+    api.login()
+
+    retunrstring += str(api.LastJson)
+    all_users = UserInfo.objects.all()
+    all_activities = Activity.objects.all()
+    #objects.get(name="")
+
+    user = all_users[0]
+    act = all_activities[0]
+
+    insact = instagramActivity()
+    insact.setInsAct(act)
+
+    insact.subirActividad(api)
+    retunrstring = str(api.LastJson)
+    str(act.icono)
+    return HttpResponse(retunrstring + ' ----------------- ' + str(act.icono))

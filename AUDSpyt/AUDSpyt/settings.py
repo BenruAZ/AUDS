@@ -32,6 +32,8 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'userInfo.apps.UserinfoConfig',
+    'actividades.apps.ActividadesConfig',
+    'serviceInstagram.apps.ServiceinstagramConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
