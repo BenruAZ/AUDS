@@ -1,0 +1,50 @@
+{% extends 'index.html'%}
+{% load staticfiles %}
+{% block content %}
+<div class="container  " style="max-width: 1920px">
+    <div class="row">
+        <div class="Usuario  col-sm-6  border border-dark rounded">
+            <div class="row p-2 ">
+                <div class="col-sm-4   p-2">
+                    <p>Nombre: {{ui.nombre}}</p>
+                    <p>
+                        Modalidad:
+                    {{ui.modalidad}}
+                    </p>
+                    <p> Contacto: {{ui.contacto}}</p>
+                </div>
+                <div class="col-sm-4 p-2 ">
+                    <p>
+                    {{ui.apellido1}}
+                    </p>
+                    <p>Estilo:
+                    {{ui.estilo}}
+                    </p>
+                </div>
+                <div class="col-sm-4 p-2 ">
+                    <p>
+                    {{ui.apellido2}}
+                    </p>
+                    Skatepark:
+                   <p> {{ui.skatepark}}</p>
+                </div>
+
+            </div>
+        </div>
+        <div class="Comentarios col-sm-6  border border-dark rounded">
+            {% for cometaritott in com %}
+            <li class="list-group-item col-sm-12 ">Usuario: {{cometaritott.instaUser.userInfo}} -- Texto : {{cometaritott.texto}}  --  Fecha: {{cometaritott.fecha}}</li>
+            {% endfor %}
+        </div>
+    </div>
+        <p>
+
+
+        </p>
+    {%if iu.instaId  %}
+        {{iu.instaId}}
+    {%else%}
+        registrar usuario
+    {%endif%}
+</div>
+{% endblock content %}

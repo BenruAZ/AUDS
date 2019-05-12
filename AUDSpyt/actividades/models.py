@@ -13,7 +13,7 @@ class Activity(models.Model):
     titulo = models.CharField(max_length=250)
     descripcionCorta = models.CharField(max_length=250)
     descripcionLarga = models.CharField(max_length=250)
-    icono = models.ImageField(upload_to='IconoActividad/')  # , default = 'pic_folder/None/no-img.jpg')
+    icono = models.ImageField(upload_to='act/')  # , default = 'pic_folder/None/no-img.jpg')
     fechaFinal = models.DateTimeField()
     publicarInstagram = models.BooleanField(default=True)
     fecha_creacion = models.DateTimeField(editable=False)
@@ -25,9 +25,10 @@ class Activity(models.Model):
     def setInsActivitynSave(self):
         from serviceInstagram.models import instagramActivity
         if self.publicarInstagram:
-            inst = instagramActivity()
-            inst.setInsAct(self)
-            inst.save()
+            logging.warning('o')
+            #inst = instagramActivity()
+            #inst.setInsAct(self)
+            #inst.save()
 
     def creationModificationdate(self):
         if not self.id:

@@ -29,7 +29,10 @@ class UserInfo(models.Model):
 
 
     def __str__(self):
-        return self.nombre + ' ' + self.apellido1
+        if(self.pk != 2):
+            return self.nombre + ' ' + self.apellido1
+        else:
+            return  'Anonimous User'
 
     def save(self, *args, **kwargs):
         if not self.id:
@@ -47,6 +50,17 @@ class UserInfo(models.Model):
                 newUser.setInstagramUser(self)
            # else:
             #    self.add_error('contacto', "El usuario ya tiene una cuenta asociada al contacro")
+
+
+class contactoUsuario(models.Model):
+    userInfo = models.ForeignKey(UserInfo, on_delete=models.CASCADE)
+    contactForeign = models.CharField(max_length=250)
+    TIPOS_CONTACTO = (
+        ('Twitter', 'Twitter'),
+        ('Instagram', 'Instagram'),
+        ('Correo', 'Correo'),
+    )
+    tipo  = models.CharField(max_length=250, choices=TIPOS_CONTACTO)
 
 
 class User(models.Model):

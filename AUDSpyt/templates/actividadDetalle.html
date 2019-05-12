@@ -1,0 +1,36 @@
+{% extends 'index.html'%}
+{% load staticfiles %}
+{% block content %}
+<div class="container  " style="max-width: 1920px">
+    <div class="row">
+        <div class="Actividad  col-sm-6  border border-dark rounded">
+            <div class="card">
+                <div class="row">
+                    <div class="col-4">
+                        <img src="{{actv.icono.url}}" class="card-img-top " >
+                    </div>
+                    <div class="col-8">
+                        <h5 class="card-title">{{actv.titulo}} </h5>
+                        <p class="card-text">{{actv.descripcionCorta}} </p>
+                        <p class="card-text">{{actv.descripcionLarga}} </p>
+                        <p class="card-text"> Likes: {{insActv.likes}} </p>
+                        <p class="card-text"> pk: {{insActv.instaId}} </p>
+                        <p class="card-text"> Fecha final: {{actv.fechaFinal}} </p>
+                    </div>
+
+                </div>
+
+
+            </div>
+        </div>
+
+        <div class="Comentarios col-sm-6  border border-dark rounded">
+            {% for cometaritott in com %}
+            <li class="list-group-item col-sm-12 ">Usuario: {{cometaritott.instaUser.userInfo}} -- Texto : {{cometaritott.texto}} --  Fecha: {{cometaritott.fecha}}</li>
+            {% endfor %}
+            <a class="btn btn-primary" href="/insta/prUpdateComment/{{actv.pk}}" role="button">Actualizar Comentarios</a>
+
+        </div>
+    </div>
+</div>
+{% endblock content %}

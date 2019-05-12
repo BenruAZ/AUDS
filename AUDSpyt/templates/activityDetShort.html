@@ -1,0 +1,58 @@
+{% extends 'index.html'%}
+{% load staticfiles %}
+{% block content %}
+<div class="container  " style="max-width: 1920px">
+    <div class="row p-2 ">
+        <div class="Cometaritos  col-sm-3 border border-dark rounded ">
+            <div class="card-title"> <h4>Cometaritos</h4>  </div>
+            {% block cometaritos %}
+            <ul class="list-group">
+            {% for cometaritott in icomentarios %}
+                <li class="list-group-item col-sm-12 ">Usuario: {{cometaritott.instaUser.userInfo}} -- Texto : {{cometaritott.texto}}  --  Fecha: {{cometaritott.fecha}}</li>
+            {% endfor %}
+            </ul>
+            {% endblock cometaritos %}
+        </div>
+        <div class="Actividades col-sm-6  border border-dark rounded">
+                <div class="card-title"> <h4>Actividades</h4>  </div>
+
+                <div class="row">
+
+                 {% block actividades %}
+                 {% for actv in all_insAct%}
+                {% if actv.pk != '' %}
+                <div class="card col-sm-4">
+                    <img src="{{actv.actividad.icono.url}}" class="card-img-top" alt="...">
+                    <h5 class="card-title">{{actv.actividad.titulo}} </h5>
+                    <p class="card-text">{{actv.actividad.descripcionCorta}} </p>
+                    <p class="card-text"> Likes: {{actv.likes}} </p>
+                    <p class="card-text"> Fecha final: {{actv.actividad.fechaFinal}} </p>
+                    <a class="btn btn-primary" href="/insta/prDetAct/{{actv.actividad.pk}}" role="button">Detalle</a>
+                </div>
+              {% endif %}
+            {% endfor %}
+                </div>
+        {% endblock actividades %}
+    </div>
+    <div class="Usuarios col-sm-3  border border-dark rounded">
+        <div class="card-title"> <h4>Usuarios</h4> </div>
+        {% block estadisticas %}
+        <ul class="list-group">
+            {% for us in users %}
+            {% if us.pk != 2%}
+            <li class="list-group-item col-sm-12 "><h5>{{us.nombre}} {{us.apellido1 }}</h5>
+                <p>Instagram: {{us.contacto}}</p>
+                <p>Estilo: {{us.estilo}}
+                <p>Modalidad: {{us.modalidad}}</p>
+                <a class="btn btn-primary" href="/insta/prDetUs/{{us.pk}}" role="button">Detalle</a>
+
+            </li>
+            {% endif %}
+            {% endfor %}
+            </ul>
+        </div>
+        {% endblock estadisticas %}
+    </div>
+</div>
+</div>
+{% endblock content %}

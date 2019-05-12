@@ -5,6 +5,7 @@ from PIL import Image
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
+from AUDSpyt.settings import BASE_DIR
 from actividades.models import Activity
 from userInfo.models import UserInfo
 from django.db import models
@@ -12,7 +13,7 @@ import logging
 from datetime import datetime
 
 import json
-from InstagramAPI import InstagramAPI
+from InstagramAPI import InstagramAPI, os
 
 
 class instagramActivity(models.Model):
@@ -25,6 +26,7 @@ class instagramActivity(models.Model):
 
 
     def setInsAct(self, act2set):
+       # time.sleep(2)
         self.actividad = act2set
         api = InstagramAPI("taeusdsspyt", "test.pyt")
         api.login()
@@ -48,8 +50,14 @@ class instagramActivity(models.Model):
         #image =  Image.open(self.actividad.icono)
         #image.save(self.actividad.icono)
         tmpImg = self.actividad.icono.open()
-        #tmpImg.save()
-        api.uploadPhoto(photo=str(tmpImg), caption=str(self.actividad.fechaFinal) + ' ' +
+        logging.warning('act ' + self.actividad.icono.url)
+        act = Activity.objects.filter(pk = self.actividad.pk).first()
+        logging.warning('PPOOODODOOODDODOODODOD ' + act.icono.url)
+        tmpImg = self.actividad.icono.open()
+        # tmpImg.save()
+        #tmpImg.save(tmpImg)
+        #photo=str(tmpImg)
+        api.uploadPhoto(str(tmpImg.path), caption=str(self.actividad.fechaFinal) + ' ' +
                                                            self.actividad.titulo + ' ' +
                                                            self.actividad.descripcionCorta
                         )
@@ -99,9 +107,11 @@ class instagramActivity(models.Model):
 
             #Despues de sacar la lista de intagram user la asignamos en este bucle
             for tmpComment in commentsJson.get('comments'):
-                if len(tmpUsList) != 0:
+                if len(userList) != 0:
                     self.setComentUser(userList, tmpComment, anonimComments)
-                self.setComentUserAnonim(anonimComments , anonimUser)
+                else:
+                    anonimComments.append(tmpComment)
+            self.setComentUserAnonim(anonimComments , anonimUser)
                     #logging.warning('No registered Users on new comments')
             has_more_comments = commentsJson.get('has_more_comments', False)
             if has_more_comments:
@@ -117,12 +127,14 @@ class instagramActivity(models.Model):
             #return 'Instagram activity not set'
 
     def setComentUser(self, userList, tmpComment, anonimComments):
+        bll = True
         for tmpUser in userList:
             comentario = comentarios()
             if tmpUser.instaId == str(tmpComment.get('user_id')):
                 self.setComentUserAux(tmpUser, tmpComment)
-            else:
-                anonimComments.append(tmpComment)
+                bll = False
+        if bll:
+            anonimComments.append(tmpComment)
 
     def setComentUserAnonim(self, anonimComments , anonimUser):
         for tmpComment in anonimComments:
